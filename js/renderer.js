@@ -36,3 +36,7 @@ const template = [
 
 const menu = remote.Menu.buildFromTemplate(template);
 remote.Menu.setApplicationMenu(menu);
+
+// const win = remote.getCurrentWindow();
+// win.hide();
+// console.log('win@@@');

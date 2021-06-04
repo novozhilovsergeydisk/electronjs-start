@@ -24,6 +24,24 @@ function createWindow () {
       win.focus();
   });
 
+  win.hide();
+
+  win.show();
+
+    // mainWindow.on('minimize',function(event){
+    //     event.preventDefault();
+    //     mainWindow.hide();
+    // });
+    //
+    // mainWindow.on('close', function (event) {
+    //     if(!application.isQuiting){
+    //         event.preventDefault();
+    //         mainWindow.hide();
+    //     }
+    //
+    //     return false;
+    // });
+
   // win.loadURL('https://трансплант.net')
 }
 
