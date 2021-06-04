@@ -1,6 +1,27 @@
 const fetch = require('node-fetch')
-const axios = require('axios').default;
-const remote = require('@electron/remote');
+const axios = require('axios').default
+
+const classes = require('./js/classes')
+
+const user = new classes.User();
+
+const reset = document.getElementById('reset')
+
+reset.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    mda.post(urls[5], {id:1}, headers)
+
+    console.log('click reset')
+})
+
+const save = document.getElementById('save')
+
+save.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    console.log('click save')
+})
 
 // const createReadStream = require( 'fs' )
 
@@ -56,13 +77,16 @@ let todo = {
 //     },
 // });
 
+// для целей отладки POST на /api/reset?key=workstation-key-1 с JSON {“id”:1}
+
 urls = [
     'http://localhost:80/ajUser.php',
     'http://httpbin.org/post',
     'http://yandex.ru',
     'http://localhost:80',
     'https://трансплант.net/ajUser.php',
-    'https://mc21.medsenger.ru/api/alert?key=workstation-key-1'
+    'https://mc21.medsenger.ru/api/alert?key=workstation-key-1',
+    'https://mc21.medsenger.ru/api/reset?key=workstation-key-1'
 ]
 
 // params = 'email=sergionov@mail.ru&pass=12345&save=true'
@@ -81,38 +105,30 @@ headers = { 'Content-Type': 'application/json' }
 url = urls[5]
 method = 'GET'
 
-function Mda() {
-    Mda.prototype.get = (url, params) => {
-        console.log('get запрос на адрес:', url, ' с параметрами ', params)
-        // Optionally the request above could also be done as
-        axios.get(url, {params: params})
-            .then(function (response) {
-                console.log(response.data['state']);
-            })
-            .catch(function (error) {
-                console.error(error);
-            })
-            .then(function () {
-                // always executed
-            });
-    }
-}
-
-const mda = new Mda()
+const mda = new classes.Mda()
 
 console.log('Создан объект:', mda)
 
-// повторить с интервалом 10 секунд
+// повторить с интервалом 2 секунды
 let timerId = setInterval(() => {
-    // mda.get(url, {})
+    mda.get(url, {})
 
-    // console.log('tick')
-}, 10000);
+    console.log('========================================= tick')
+}, 2000);
 
-// остановить вывод через 5 секунд
+// остановить вывод через 10 секунд
 setTimeout(() => {
-    // clearInterval(timerId);
-    // console.log('stop');
+    clearInterval(timerId);
+
+    alert('test');
+
+    const win = remote.getCurrentWindow();
+    win.hide();
+
+    setTimeout(() => {
+        win.show();
+    }, 2000);
+
 }, 10000);
 
 

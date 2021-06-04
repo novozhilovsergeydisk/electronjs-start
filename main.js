@@ -5,42 +5,58 @@ const path = require('path')
 
 function createWindow () {
   const win = new BrowserWindow({
+    x: 0,
+      y: 0,
     width: 1200,
-    height: 600,
-    frame: true,
+    height: 930,
+    frame: false,
+      resizable: true,
+      movable: false,
+      backgroundColor: '#666333',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
       contextIsolation: false,
       preload: path.join(__dirname, 'preload.js')
     }
-  });
+  })
 
-  win.loadFile('index.html');
-  win.webContents.openDevTools();
+  win.loadFile('index.html')
+  win.webContents.openDevTools()
 
-  win.setAlwaysOnTop(true);
+  win.setAlwaysOnTop(true)
   win.on('focus', () => {
-      win.focus();
-  });
+      win.focus()
+  })
 
-  win.hide();
+  // win.setMenuBarVisibility(true)
 
-  win.show();
+  // win.hide()
+  //
+  // win.show()
+
+    win.on('hide', (e) => {
+        // Navigate the window back when the user hits their mouse back button
+        // if (cmd === 'browser-backward' && win.webContents.canGoBack()) {
+        //     console.log('test')
+        //
+        //     win.webContents.goBack()
+        // }
+    })
 
     // mainWindow.on('minimize',function(event){
-    //     event.preventDefault();
-    //     mainWindow.hide();
-    // });
+    //     event.preventDefault()
+    //     mainWindow.hide()
+    // })
     //
     // mainWindow.on('close', function (event) {
     //     if(!application.isQuiting){
-    //         event.preventDefault();
-    //         mainWindow.hide();
+    //         event.preventDefault()
+    //         mainWindow.hide()
     //     }
     //
-    //     return false;
-    // });
+    //     return false
+    // })
 
   // win.loadURL('https://трансплант.net')
 }
@@ -63,5 +79,5 @@ app.on('window-all-closed', () => {
 
 
 
-console.log('start app');
+console.log('start app')
 

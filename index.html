@@ -10,14 +10,14 @@
 </head>
 <body style="background: white;">
     <div class="container">
-        <div class="row" style="margin-top: 100px">
+        <div class="row" style="margin-top: 20px">
             <div class="col-md-10">
-                <h2>Medsenger doctor alarm</h2>
-                <p>
-                    We are using Node.js <span id="node-version"></span><br />
-                    Chromium <span id="chrome-version"></span><br />
-                    Electron <span id="electron-version"></span>
-                </p>
+                <h3>Medsenger doctor alarm</h3>
+                <!--<p>-->
+                    <!--We are using Node.js <span id="node-version"></span><br />-->
+                    <!--Chromium <span id="chrome-version"></span><br />-->
+                    <!--Electron <span id="electron-version"></span>-->
+                <!--</p>-->
             </div>
         </div>
         <div class="row">
@@ -32,7 +32,11 @@
                     </div>
 
                     <div class="mb-3">
-                        <button class="btn btn-success">Записать сообщение</button>
+                        <button id="save" class="btn btn-success">Записать сообщение</button>
+                    </div>
+
+                    <div class="mb-3">
+                        <button id="reset" class="btn btn-primary">Сброс</button>
                     </div>
                 </form>
             </div>

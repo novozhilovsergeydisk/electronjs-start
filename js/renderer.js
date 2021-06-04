@@ -37,6 +37,12 @@ const template = [
 const menu = remote.Menu.buildFromTemplate(template);
 remote.Menu.setApplicationMenu(menu);
 
+//
+
+// const { BrowserWindow } = require('electron').remote
+// const win2 = new BrowserWindow({ width: 800, height: 600 })
+// win2.loadURL('https://github.com')
+
 // const win = remote.getCurrentWindow();
 // win.hide();
 // console.log('win@@@');

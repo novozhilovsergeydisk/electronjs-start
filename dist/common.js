@@ -2,7 +2,22 @@
 
 var fetch = require('node-fetch');
 
-var axios = require('axios')["default"]; // const createReadStream = require( 'fs' )
+var axios = require('axios')["default"];
+
+var classes = require('./js/classes');
+
+var user = new classes.User();
+var reset = document.getElementById('reset');
+reset.addEventListener('click', function (e) {
+  e.preventDefault();
+  mda.post(urls[1], '{id:1}', headers);
+  console.log('click reset');
+});
+var save = document.getElementById('save');
+save.addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log('click save');
+}); // const createReadStream = require( 'fs' )
 // import { createReadStream } from 'fs'
 // const stream = createReadStream('input.txt')
 // fetch('http://httpbin.org/post', { method: 'POST', body: stream })
@@ -13,7 +28,6 @@ var axios = require('axios')["default"]; // const createReadStream = require( 'f
 //     title: "loren impsum doloris",
 //     completed: false
 // }
-
 
 var todo = {
   email: 'sergionov@mail.ru',
@@ -46,8 +60,9 @@ var todo = {
 //         },
 //     },
 // });
+// для целей отладки POST на /api/reset?key=workstation-key-1 с JSON {“id”:1}
 
-urls = ['http://localhost:80/ajUser.php', 'http://httpbin.org/post', 'http://yandex.ru', 'http://localhost:80', 'https://трансплант.net/ajUser.php', 'https://mc21.medsenger.ru/api/alert?key=workstation-key-1']; // params = 'email=sergionov@mail.ru&pass=12345&save=true'
+urls = ['http://localhost:80/ajUser.php', 'http://httpbin.org/post', 'http://yandex.ru', 'http://localhost:80', 'https://трансплант.net/ajUser.php', 'https://mc21.medsenger.ru/api/alert?key=workstation-key-1', 'https://mc21.medsenger.ru/api/reset?key=workstation-key-1']; // params = 'email=sergionov@mail.ru&pass=12345&save=true'
 // headers = { 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }
 
 params = JSON.stringify(todo);
@@ -62,31 +77,22 @@ headers = {
 
 url = urls[5];
 method = 'GET';
+var mda = new classes.Mda();
+console.log('Создан объект:', mda); // повторить с интервалом 2 секунды
 
-function Mda() {
-  Mda.prototype.get = function (url, params) {
-    console.log('get запрос на адрес:', url, ' с параметрами ', params); // Optionally the request above could also be done as
+var timerId = setInterval(function () {
+  mda.get(url, {});
+  console.log('========================================= tick');
+}, 2000); // остановить вывод через 10 секунд
 
-    axios.get(url, {
-      params: params
-    }).then(function (response) {
-      console.log(response.data['state']);
-    })["catch"](function (error) {
-      console.error(error);
-    }).then(function () {// always executed
-    });
-  };
-}
-
-var mda = new Mda();
-console.log('Создан объект:', mda); // повторить с интервалом 10 секунд
-
-var timerId = setInterval(function () {// mda.get(url, {})
-  // console.log('tick')
-}, 10000); // остановить вывод через 5 секунд
-
-setTimeout(function () {// clearInterval(timerId);
-  // console.log('stop');
+setTimeout(function () {
+  clearInterval(timerId);
+  alert('test');
+  var win = remote.getCurrentWindow();
+  win.hide();
+  setTimeout(function () {
+    win.show();
+  }, 2000);
 }, 10000); // fetch(url)
 //     .then(res => {
 //         if(res.headers.get("content-type") &&
