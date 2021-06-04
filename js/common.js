@@ -1,5 +1,6 @@
 const fetch = require('node-fetch')
 const axios = require('axios').default;
+const remote = require('@electron/remote');
 
 // const createReadStream = require( 'fs' )
 
