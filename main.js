@@ -7,8 +7,8 @@ function createWindow () {
   const win = new BrowserWindow({
     x: 0,
       y: 0,
-    width: 1200,
-    height: 930,
+    width: 1350,
+    height: 970,
     frame: false,
       resizable: true,
       movable: false,
@@ -31,8 +31,8 @@ function createWindow () {
 
   // win.setMenuBarVisibility(true)
 
-  // win.hide()
-  //
+  win.hide()
+
   // win.show()
 
     win.on('hide', (e) => {

@@ -1,122 +1,303 @@
 "use strict";
 
-var fetch = require('node-fetch');
-
-var axios = require('axios')["default"];
-
 var classes = require('./js/classes');
 
-var user = new classes.User();
-var reset = document.getElementById('reset');
+var axios = require('axios')["default"]; // const constants = require('./js/const')
+// console.log(urls[5])
+// обработчик на document сработает и выведет сообщение.
+
+
+document.getElementById('save').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log('save');
+  var select = document.getElementById('answer'); // save the selected option
+
+  var selected = [];
+
+  for (var i = 0; i < select.options.length; i++) {
+    selected[i] = select.options[i];
+  }
+
+  var n = document.getElementById('answer').options.selectedIndex;
+  var val = document.getElementById('answer').options[n].value;
+  var id = document.getElementById('id').innerText;
+  var comments = document.getElementById('comments').value; // console.log(comments)
+
+  var options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: {
+      id: id,
+      result: val,
+      comments: comments
+    },
+    url: urls[5]
+  };
+  console.log(options);
+  axios(options).then(function (res) {
+    mda.block = false; // Mda.prototype.res = res.data
+
+    console.log('response.data =', res.data); // console.log('POST ================================================')
+
+    var win = remote.getCurrentWindow();
+    win.hide();
+  })["catch"](function (error) {
+    console.error('error post =', error);
+  });
+});
+var post = document.getElementById('post');
+var reset = document.getElementById('reset'); // // ловим на document...
+// save.addEventListener("hello", function(event) { // (1)
+//     alert("Привет от " + event.target.tagName); // Привет от H1
+// });
+// // ...запуск события на элементе!
+// let event = new Event("hello", {bubbles: true}); // (2)
+// save.dispatchEvent(event);
+
+document.getElementById('get').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.warn('get');
+  params = {};
+  url = urls[5];
+  method = 'GET';
+  console.log(url, method, params);
+  axios.get(url, {
+    params: params
+  }).then(function (res) {
+    // Mda.prototype.res = res.data
+    console.log('response.data =', res.data);
+
+    if (res.data['state'] == 'alert') {
+      var optionArray = res.data['answer_options'];
+      console.log(res.data['alert']); // mda.block = true
+
+      var max = optionArray.length;
+      var select = document.getElementById('answer');
+      var opts = select.options;
+
+      while (opts.length > 0) {
+        opts[opts.length - 1] = null;
+      } // console.log('count select.length', max)
+
+
+      for (var i = 0; i <= max - 1; i++) {
+        var newOption = new Option(optionArray[i], optionArray[i]);
+        select.appendChild(newOption);
+      }
+
+      document.getElementById('patient').innerText = res.data['alert']['name'];
+      document.getElementById('age').innerText = res.data['alert']['age'];
+      document.getElementById('contract_id').innerText = res.data['alert']['contract_id'];
+      document.getElementById('birthday').innerText = res.data['alert']['birthday'];
+      document.getElementById('phone').innerText = res.data['alert']['phone'];
+      document.getElementById('message').innerHTML = res.data['alert']['message'];
+      document.getElementById('comment').innerText = res.data['alert']['comment'];
+      document.getElementById('id').innerText = res.data['alert']['id'];
+      mda.block = true;
+    } // console.log('================================================')
+
+  })["catch"](function (error) {
+    console.error('error get =', error);
+  }).then(function () {// always executed
+  });
+});
+post.addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log('post');
+  var select = document.getElementById('answer'); // save the selected option
+
+  var selected = [];
+
+  for (var i = 0; i < select.options.length; i++) {
+    selected[i] = select.options[i];
+  }
+
+  var n = document.getElementById('answer').options.selectedIndex;
+  var val = document.getElementById('answer').options[n].value;
+  var comments = document.getElementById('comments').value;
+  console.log(comments);
+  var options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: {
+      id: 1,
+      result: val,
+      comments: comments
+    },
+    url: urls[5]
+  };
+  console.log(options); // axios(options)
+  //     .then(res => {
+  //         // Mda.prototype.res = res.data
+  //         console.log('response.data =', res.data)
+  //         // console.log('POST ================================================')
+  //     })
+  //     .catch(function (error) {
+  //         console.error('error post =', error)
+  //     })
+});
 reset.addEventListener('click', function (e) {
   e.preventDefault();
-  mda.post(urls[1], '{id:1}', headers);
-  console.log('click reset');
-});
-var save = document.getElementById('save');
-save.addEventListener('click', function (e) {
-  e.preventDefault();
-  console.log('click save');
-}); // const createReadStream = require( 'fs' )
-// import { createReadStream } from 'fs'
-// const stream = createReadStream('input.txt')
-// fetch('http://httpbin.org/post', { method: 'POST', body: stream })
-//     .then(res => res.json())
-//     .then(json => console.log(json))
-// let todo = {
-//     userId: 123,
-//     title: "loren impsum doloris",
-//     completed: false
-// }
-
-var todo = {
-  email: 'sergionov@mail.ru',
-  pass: 123456,
-  save: true,
-  csrf_token: '900c48d66f07c601b8d1e98bc50e4a26a1264264e25bcec9ddc839dc9e6aefd6'
-}; // GET mc21.medsenger.ru/api/alert?key=workstation-key-1 - получение последнего тревожного сообщения
+  console.log('reset');
+  var options = {
+    method: 'POST',
+    headers: headers,
+    data: {
+      id: 1
+    },
+    url: urls[6]
+  };
+  console.log(options);
+  axios(options).then(function (res) {
+    // Mda.prototype.res = res.data
+    console.log('response.data =', res.data); // console.log('POST ================================================')
+  })["catch"](function (error) {
+    console.error('error post =', error);
+  }); // let data = {id:1}
+  //
+  // mda.post(urls[6], data, headers)
+  //
+  // console.log('start application')
+  //
+  // let win = remote.getCurrentWindow()
+  //
+  // win.hide()
+}); // const save = document.getElementById('save')
 //
-// {
-//     "alert": {
-//     "birthday": "27.04.1994",
-//         "created_on": "Wed, 02 Jun 2021 19:28:54 GMT",
-//         "id": 1,
-//         "message": "ТЕКСТ",
-//         "phone": "ТЕЛЕФОН"
-// },
-//     "count": 1,
-//     "state": "alert"
-// }
-// {“id”: 1, “result”: “не дозвонился“, “comment”: “звонил долго“}
-// https://github.com/axios/axios/issues/925
-// const req = await axios({
-//     url: 'https://somedomain.com',
-//     proxy: {
-//         host: '89.151.146.7',
-//         port: 6060,
-//         auth: {
-//             username: 'myname',
-//             password: 'mypass',
-//         },
-//     },
-// });
-// для целей отладки POST на /api/reset?key=workstation-key-1 с JSON {“id”:1}
-
-urls = ['http://localhost:80/ajUser.php', 'http://httpbin.org/post', 'http://yandex.ru', 'http://localhost:80', 'https://трансплант.net/ajUser.php', 'https://mc21.medsenger.ru/api/alert?key=workstation-key-1', 'https://mc21.medsenger.ru/api/reset?key=workstation-key-1']; // params = 'email=sergionov@mail.ru&pass=12345&save=true'
+// save.addEventListener('click', (e) => {
+//     e.preventDefault()
+//
+//     let data = {id:1}
+//     mda.post(urls[6], data, headers)
+//     console.log('click reset')
+//
+//     data = {id:1, result: 'Не дозвонился', comment: 'Звонил долго'}
+//
+//     mda.post(urls[5], data, headers)
+//
+//     // let win = remote.getCurrentWindow()
+//
+//     // win.hide()
+//
+//     console.log('click save')
+// })
+// params = 'email=sergionov@mail.ru&pass=12345&save=true'
 // headers = { 'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8' }
+// headers = { 'Content-Type': 'text/html; charset=UTF-8' }
 
-params = JSON.stringify(todo);
 headers = {
   'Content-Type': 'application/json'
-}; // headers = { 'Content-Type': 'text/html; charset=UTF-8' }
-// function sayHi() {
-//     alert('Привет');
-// }
-//
-// setTimeout(sayHi, 1000);
-
+};
+urls = ['http://localhost:80/ajUser.php', 'http://httpbin.org/post', 'http://yandex.ru', 'http://localhost:80', 'https://трансплант.net/ajUser.php', 'https://mc21.medsenger.ru/api/alert?key=workstation-key-1', 'https://mc21.medsenger.ru/api/reset?key=workstation-key-1'];
 url = urls[5];
 method = 'GET';
 var mda = new classes.Mda();
-console.log('Создан объект:', mda); // повторить с интервалом 2 секунды
+mda.block = false; // mda.block = true
+// console.log('Создан объект:', mda)
+// повторить с интервалом 2 секунды
 
 var timerId = setInterval(function () {
-  mda.get(url, {});
-  console.log('========================================= tick');
-}, 2000); // остановить вывод через 10 секунд
+  // mda.get(url, {})
+  //
+  // console.log('mda.res=', mda.res)
+  //
+  // // console.log('******************************* mda.block =', mda.block)
+  //
+  // if (mda.res != null) {
+  //     console.log('mda.res[state] =', mda.res['state'])
+  //
+  //     if (mda.res['state'] == 'alert') {
+  //         let optionArray = mda.res['answer_options']
+  //
+  //         console.log('optionArray =', optionArray)
+  //         // console.log('')
+  //
+  //         mda.block = true
+  //         let max = optionArray.length
+  //         let select = document.getElementById('answer')
+  //
+  //         // console.log('count select.length', max)
+  //
+  //         for (var i = 0; i <= max - 1; i++){
+  //             let newOption = new Option(optionArray[i], i);
+  //             select.appendChild(newOption);
+  //         }
+  //
+  //         let win = remote.getCurrentWindow()
+  //         win.show()
+  //
+  //         mda.res = null
+  //     }
+  // }
+  //
+  // if (mda.block) {
+  //     // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> mda.block =', mda.block)
+  //     mda.block = false
+  // }
+  console.log('mda.block =', mda.block); // mda.block = true
 
-setTimeout(function () {
-  clearInterval(timerId);
-  alert('test');
-  var win = remote.getCurrentWindow();
-  win.hide();
-  setTimeout(function () {
+  if (mda.block == false) {
+    var win = remote.getCurrentWindow();
     win.show();
-  }, 2000);
-}, 10000); // fetch(url)
-//     .then(res => {
-//         if(res.headers.get("content-type") &&
-//             res.headers.get("content-type").toLowerCase().indexOf("application/json") >= 0) {
-//             return res.json()
-//         } else {
-//             throw new TypeError()
-//         }
-//     })
-// fetch(url, {method:"GET"})
-//     .then(res => console.log(res.headers))
-// fetch(url)
-//     .then(res => res.json())
-//     .then(json => console.log(json))
-//     .catch(err => console.log(err))
-// fetch(url, {headers: headers})
-//     .then(res => res.json())
-//     .then(json => console.log(json))
-//     .catch(err => console.log(err))
-// fetch(url, {
-//     method: method,
-//     headers: headers,
-//     body: params
-// })
-//     .then(res => res.json())
-//     .then(json => console.log(json))
-//     .catch(err => console.log(err))
+    params = {};
+    url = urls[5];
+    method = 'GET';
+    console.log(url, method, params);
+    axios.get(url, {
+      params: params
+    }).then(function (res) {
+      // Mda.prototype.res = res.data
+      console.log('response.data =', res.data);
+
+      if (res.data['state'] == 'alert') {
+        var optionArray = res.data['answer_options'];
+        console.log(res.data['alert']); // mda.block = true
+
+        var max = optionArray.length;
+        var select = document.getElementById('answer');
+        var opts = select.options;
+
+        while (opts.length > 0) {
+          opts[opts.length - 1] = null;
+        } // console.log('count select.length', max)
+
+
+        for (var i = 0; i <= max - 1; i++) {
+          var newOption = new Option(optionArray[i], optionArray[i]);
+          select.appendChild(newOption);
+        }
+
+        document.getElementById('patient').innerText = res.data['alert']['name'];
+        document.getElementById('age').innerText = res.data['alert']['age'];
+        document.getElementById('contract_id').innerText = res.data['alert']['contract_id'];
+        document.getElementById('birthday').innerText = res.data['alert']['birthday'];
+        document.getElementById('phone').innerText = res.data['alert']['phone'];
+        document.getElementById('message').innerHTML = res.data['alert']['message'];
+        document.getElementById('comment').innerText = res.data['alert']['comment'];
+        document.getElementById('id').innerText = res.data['alert']['id'];
+        mda.block = true;
+      } // console.log('================================================')
+
+    })["catch"](function (error) {
+      console.error('error get =', error);
+    }).then(function () {// always executed
+    });
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> mda.block =', mda.block);
+
+    if (mda.block) {
+      // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> mda.block =', mda.block)
+      var _win = remote.getCurrentWindow();
+
+      _win.show();
+    }
+  } // if (mda.block) {
+  //     let win = remote.getCurrentWindow()
+  //
+  //     win.show()
+  // }
+
+}, 10000);

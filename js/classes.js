@@ -1,3 +1,5 @@
+const axios = require('axios').default
+
 class User {
     constructor(name, age, email) {
         this.name = name
@@ -8,15 +10,24 @@ class User {
 
 // Medsenger doctor alarm (MDA)
 const Mda = function() {
+    Mda.prototype.res = null
+    Mda.prototype.block = false
+
+    Mda.prototype.getRes = () => {
+        console.log('res')
+    }
+
     Mda.prototype.get = (url, params) => {
-        console.log('get запрос на адрес:', url, ' с параметрами ', params)
+        // console.log('get запрос на адрес:', url, ' с параметрами ', params)
 
         axios.get(url, {params: params})
-            .then(function (response) {
-                console.log(response.data)
+            .then(function (res) {
+                Mda.prototype.res = res.data
+                console.log('response.data =', res.data)
+                // console.log('================================================')
             })
             .catch(function (error) {
-                console.error(error)
+                console.error('error get =', error)
             })
             .then(function () {
                 // always executed
@@ -35,8 +46,12 @@ const Mda = function() {
 
         axios(options)
             .then(res => {
-                console.log('res:', res);
-                console.log('res.data:', res.data);
+                Mda.prototype.res = res.data
+                console.log('response.data =', res.data)
+                console.log('POST ================================================')
+            })
+            .catch(function (error) {
+                console.error('error post =', error)
             })
     }
 }

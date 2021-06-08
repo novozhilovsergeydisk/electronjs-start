@@ -12,7 +12,9 @@
     <div class="container">
         <div class="row" style="margin-top: 20px">
             <div class="col-md-10">
-                <h3>Medsenger doctor alarm</h3>
+                <h1 id="elem">Привет из кода!</h1>
+
+                <!--<h3>Medsenger doctor alarm</h3>-->
                 <!--<p>-->
                     <!--We are using Node.js <span id="node-version"></span><br />-->
                     <!--Chromium <span id="chrome-version"></span><br />-->
@@ -21,22 +23,40 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <form id="main-form" action="">
                     <div class="mb-3">
-                        <select name="answer" style="width: 200px" id="answer" class="form-select" aria-label="Default select example">
-                            <option value="one">Я вызвал скорую</option>
-                            <option value="two">Я дал рекомендации</option>
-                            <option value="three">Ложная тревога</option>
-                        </select>
+                        <select name="answer" style="width: 310px" id="answer" class="form-select" aria-label="Default select example"> </select>
+                    </div>
+
+                    <!--<label for="comments" class="form-label">Комментарий</label>-->
+                    <div class="input-group mb-3" style="width: 510px">
+                        <span class="input-group-text" id="basic-comments">Комментарий</span>
+                        <input type="text" class="form-control" id="comments" name="comments" aria-describedby="basic-addon3" value="звонил долго">
+
+                    </div>
+
+                    <div class="input-group mb-3" style="width: 510px">
+                        <ul class="list-group list-group list-group-flush">
+                            <li class="list-group-item"> <span><strong>пациент:</strong></span>       <span id="patient"></span></li>
+                            <li class="list-group-item"> <span><strong>возраст:</strong></span>       <span id="age">23</span></li>
+                            <li class="list-group-item"> <span><strong>день рождения:</strong></span> <span id="birthday"></span></li>
+                            <li class="list-group-item"> <span><strong>контракт:</strong></span>      <span id="contract_id"></span></li>
+                            <li class="list-group-item"> <span><strong>телефон:</strong></span>       <span id="phone"></span></li>
+                            <li class="list-group-item"> <span><strong>сообщение:</strong></span>     <span id="message"></span></li>
+                            <li class="list-group-item"> <span><strong>Комментарий:</strong></span>   <span id="comment"></span></li>
+                            <li class="list-group-item"> <span><strong>ID:</strong></span>             <span id="id"></span></li>
+                        </ul>
                     </div>
 
                     <div class="mb-3">
-                        <button id="save" class="btn btn-success">Записать сообщение</button>
-                    </div>
+                        <button id="get" class="btn btn-success">GET alert</button>
 
-                    <div class="mb-3">
-                        <button id="reset" class="btn btn-primary">Сброс</button>
+                        <button id="post" class="btn btn-danger">POST alert</button>
+
+                        <button id="reset" class="btn btn-secondary">POST reset</button>
+
+                        <button id="save" class="btn btn-warning">POST save</button>
                     </div>
                 </form>
             </div>
